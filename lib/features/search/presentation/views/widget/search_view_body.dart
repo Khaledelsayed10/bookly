@@ -1,6 +1,12 @@
 import 'package:bookly/core/utils/styles.dart';
+import 'package:bookly/core/widget/custom_error_widget.dart';
+import 'package:bookly/core/widget/custom_loading_indicator.dart';
+import 'package:bookly/features/home/presentation/views/widget/best_seller_list_view_item.dart';
+import 'package:bookly/features/search/presentation/manger/search_cubit/search_cubit.dart';
+import 'package:bookly/features/search/presentation/manger/search_cubit/search_state.dart';
 import 'package:bookly/features/search/presentation/views/widget/custom_search_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchViewBody extends StatelessWidget {
   const SearchViewBody({super.key});
@@ -34,16 +40,29 @@ class SearchResultListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10,
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          child: Text('data'),
-        );
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        if (state is SearchStateSuccess) {
+          return ListView.builder(
+            itemCount: state.books.length,
+            padding: EdgeInsets.zero,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                child: BookListViewItem(
+                  bookModels: state.books[index],
+                ),
+              );
+            },
+          );
+        } else if (state is SearchStateFaluire) {
+          return CustomErrorWidget(errMessage: state.errorMessage);
+        } else {
+          return const CustomLoadingIndicator();
+        }
       },
     );
   }

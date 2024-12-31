@@ -11,6 +11,7 @@ class BookListViewItem extends StatelessWidget {
   const BookListViewItem({super.key, required this.bookModels});
 
   final BookModels bookModels;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -23,7 +24,9 @@ class BookListViewItem extends StatelessWidget {
         child: Row(
           children: [
             CustomBookImage(
-                imageUrl: bookModels.volumeInfo.imageLinks?.thumbnail ?? ''),
+              imageUrl: bookModels.volumeInfo.imageLinks?.thumbnail ??
+                  'https://via.placeholder.com/150',
+            ),
             const SizedBox(
               width: 33,
             ),
@@ -34,7 +37,7 @@ class BookListViewItem extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .5,
                     child: Text(
-                      bookModels.volumeInfo.title!,
+                      bookModels.volumeInfo.title ?? 'No Title Available',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Styles.textStyle20
@@ -42,7 +45,9 @@ class BookListViewItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    bookModels.volumeInfo.authors![0],
+                    (bookModels.volumeInfo.authors?.isNotEmpty ?? false)
+                        ? bookModels.volumeInfo.authors!.first
+                        : 'Unknown Author',
                     style: Styles.textStyle14,
                   ),
                   Expanded(
@@ -57,7 +62,7 @@ class BookListViewItem extends StatelessWidget {
                         const Spacer(),
                         BookRating(
                           count: bookModels.volumeInfo.ratingsCount ?? 0,
-                          rating: bookModels.volumeInfo.ratingsCount ?? 0,
+                          rating: bookModels.volumeInfo.averageRating ?? 0.0,
                         ),
                       ],
                     ),
