@@ -31,7 +31,6 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
               BlocProvider.of<SearchCubit>(context)
                   .fetchSearchResultCubitMethod(searchWord: data!);
             } else {
-              // طباعة رسالة خطأ أو عرض تنبيه إذا كان الحقل فارغًا
               print("Please enter a search term");
             }
           },
