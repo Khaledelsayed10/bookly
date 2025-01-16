@@ -7,7 +7,9 @@ class CustomShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+      ),
       child: Shimmer.fromColors(
         baseColor: Colors.grey.withOpacity(0.7),
         highlightColor: Colors.grey.withOpacity(0.4),
