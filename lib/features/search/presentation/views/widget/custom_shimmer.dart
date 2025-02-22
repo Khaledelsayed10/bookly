@@ -41,7 +41,7 @@ class CustomShimmer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
                   Container(
                     width: 150,
                     height: 16,
